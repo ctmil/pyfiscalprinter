@@ -6,8 +6,10 @@ import sys
 if False or '--epson' in sys.argv:
     from epsonFiscal import EpsonPrinter
     print "Usando driver de Epson"
-    model = ["tickeadoras", "epsonlx300+", "tm-220-af"][1]
-    printer = EpsonPrinter(deviceFile="COM2", model=model, dummy=False)
+    #model = ["tickeadoras", "epsonlx300+", "tm-220-af"][1]
+    model = ["tickeadoras", "epsonlx300+", "tm-220-af"][2]
+    #printer = EpsonPrinter(deviceFile="COM2", model=model, dummy=False)
+    printer = EpsonPrinter(deviceFile="/dev/ttyUSB0", model=model, dummy=False)
 else:
     from hasarPrinter import HasarPrinter
     print "Usando driver de Hasar"
@@ -22,7 +24,7 @@ print "imprimiendo la FC ", number
 if model in ("epsonlx300+", ):
     # TODO: ajustar en openTicket
     printer.openBillTicket("B", "Nombre y Apellido", "Direccion", "0", # nro_doc
-                           printer.DOC_TYPE_SIN_CALIFICADOR, 
+                           printer.DOC_TYPE_SIN_CALIFICADOR,
                            printer.IVA_TYPE_CONSUMIDOR_FINAL)
 else:
     printer.openTicket()
@@ -37,5 +39,3 @@ printer.addPayment("Efectivo", 11.50)
 
 # Cerrar el comprobante fiscal
 printer.closeDocument()
-
-
